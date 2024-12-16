@@ -7,6 +7,7 @@ struct MotorPins {
     int forwardPin;
     int backwardPin;
     // Mecanum drivetrain class
+}
 class MecanumDrivetrain {
 public:
     // Constructor
@@ -32,7 +33,5 @@ private:
 
     // Helper to constrain motor speed
     float constrainSpeed(float speed);
-    };
-}
-
+};
 #endif
