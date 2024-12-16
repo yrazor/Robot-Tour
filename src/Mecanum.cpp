@@ -1,7 +1,7 @@
 #include <Mecanum.h>
 
-Mecanum::Mecanum(const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight)
-    : frontLeftMotor(frontLeft), frontRightMotor(frontRight), rearLeftMotor(rearLeft), rearRightMotor(rearRight) {}
+Mecanum::Mecanum(const SensorPins& sensorPins, const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight)
+    : sensorPins(sensorPins), frontLeftMotor(frontLeft), frontRightMotor(frontRight), rearLeftMotor(rearLeft), rearRightMotor(rearRight) {}
 //Begin method
 void Mecanum::begin() {
     pinMode(frontLeftMotor.forwardPin,OUTPUT);
@@ -15,6 +15,9 @@ void Mecanum::begin() {
 
     pinMode(rearRightMotor.forwardPin,OUTPUT);
     pinMode(rearRightMotor.backwardPin,OUTPUT);
+
+    pinMode(sensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(sensorPins.echoPin, INPUT); // Sets the echoPin as an Input
 }
 // Drive method based on coordinates x and y
 /*void Mecanum::drive(float x, float y, float rotation) {
@@ -36,6 +39,23 @@ void Mecanum::begin() {
     setMotorSpeed(rearLeftMotor, rearLeftSpeed);
     setMotorSpeed(rearRightMotor, rearRightSpeed);
 }*/
-void Mecanum::driveForward() {
+void Mecanum::driveForward(float speed) {
     
+}
+// Function to get distance from ultrasonic sensor
+float getDistance() {
+  // Send a 10-microsecond pulse to the trigger pin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Measure the duration of the echo pulse
+  long duration = pulseIn(echoPin, HIGH);
+
+  // Convert the duration to distance (cm)
+  float distance = duration * 0.034 / 2;
+
+  return distance;
 }

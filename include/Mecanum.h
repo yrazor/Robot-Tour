@@ -7,7 +7,7 @@ struct MotorPins {
     int forwardPin;
     int backwardPin;
 };
-struct sensorPins {
+struct SensorPins {
     int trigPin;
     int echoPin;
 };
@@ -15,17 +15,17 @@ struct sensorPins {
 class Mecanum {
 public:
     // Constructor
-    Mecanum(const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight);
+    Mecanum(const SensorPins& sensorPins, const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight);
 
     // Initialization
     void begin();
 
     // Movement functions (maybe)
     //void drive(float x, float y, float rotation); // x: strafing, y: forward/backward, rotation: turning
-    void driveForward();
-    void driveBackward();
-    void driveLeft();
-    void driveRight();
+    void driveForward(float speed);
+    void driveBackward(float speed);
+    void driveLeft(float speed);
+    void driveRight(float speed);
 
 
     // Stops all motors
@@ -40,9 +40,11 @@ private:
     MotorPins frontRightMotor;
     MotorPins rearLeftMotor;
     MotorPins rearRightMotor;
+    SensorPins sensorPins;
 
     // Helper to constrain motor speed
-    float constrainSpeed(float speed);
+    //float constrainSpeed(float speed);
+    float getDistance();
 };
 
 #endif
