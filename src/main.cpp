@@ -1,0 +1,60 @@
+#include <Arduino.h>
+
+const int forwardBackLeftPin = 4;
+const int backwardBackLeftPin = 5;
+const int forwardBackRightPin = 2; 
+const int backwardBackRightPin = 3; 
+
+const int trigPin = 52;
+const int echoPin = 53;
+
+float distance;
+const int minDistance = 5;  // Minimum distance in cm (motor will stop)
+const int maxDistance = 50; // Maximum distance in cm (motor will run full speed)
+
+const int delayTime = 2000;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(forwardBackLeftPin,OUTPUT); // Set backleft motor FORWARD pin
+  pinMode(backwardBackLeftPin,OUTPUT); // Set backleft motor BACKWARD pin
+  pinMode(forwardBackRightPin,OUTPUT); // Set backright motor FORWARD pin
+  pinMode(backwardBackRightPin,OUTPUT); // Set backright motor BACKWARD pin
+  pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  Serial.begin(9600); // Starts the serial communication
+}
+
+// Function to get distance from ultrasonic sensor
+float getDistance() {
+  // Send a 10-microsecond pulse to the trigger pin
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  // Measure the duration of the echo pulse
+  long duration = pulseIn(echoPin, HIGH);
+
+  // Convert the duration to distance (cm)
+  float distance = duration * 0.034 / 2;
+
+  return distance;
+}
+
+void loop() {
+    distance = getDistance();
+    int motorSpeed = map(constrain(distance, minDistance, maxDistance), minDistance, maxDistance, 0, 255);
+    // Set motor speed
+    analogWrite(forwardBackLeftPin, motorSpeed);
+
+    // Debugging: print distance and motor speed
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    Serial.print(" cm, Motor Speed: ");
+    Serial.println(motorSpeed);
+
+    delay(50); // Short delay for stability
+}
+
