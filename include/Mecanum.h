@@ -38,6 +38,13 @@ public:
     // Stops all motors
     void stop(); 
 
+    float distance;
+    float dist;
+
+    // Helper to constrain motor speed
+    //float constrainSpeed(float speed);
+    float getDistance(SensorPins sensorLocation);
+
 private:
     // Private helper functions
     //void setMotorSpeed(const MotorPins& motor, float speed);
@@ -52,12 +59,6 @@ private:
     SensorPins rearSensorPins;
     SensorPins rightSensorPins;
     SensorPins leftSensorPins;
-
-    float distance;
-
-    // Helper to constrain motor speed
-    //float constrainSpeed(float speed);
-    float getDistance(SensorPins sensorLocation);
 };
 
 #endif

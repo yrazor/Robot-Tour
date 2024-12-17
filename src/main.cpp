@@ -18,6 +18,10 @@ void setup() { // Init
   drivetrain.begin();
   Serial.begin(9600);
   drivetrain.driveForward(200);
+  drivetrain.driveBackward(200);
+  drivetrain.driveRight(200);
+  drivetrain.driveLeft(200);
+
 }
 
 void loop() { //Driving
