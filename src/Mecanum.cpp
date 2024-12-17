@@ -69,8 +69,14 @@ void Mecanum::driveForward(float speed) {
     analogWrite(frontRightMotor.forwardPin,speed);
     analogWrite(rearLeftMotor.forwardPin,speed);
     analogWrite(rearRightMotor.forwardPin,speed);
-    while (distance <= 2) {
+    Serial.println("Motor speeds:");
+    Serial.println(speed);
+
+    while (distance >= 2) {
         Mecanum::getDistance(frontSensorPins);
+        Serial.println("sensor distance:");
+        Serial.println(distance);
+
     }
     Mecanum::stop();
 }
@@ -79,7 +85,7 @@ void Mecanum::driveBackward(float speed) {
     analogWrite(frontRightMotor.backwardPin,speed);
     analogWrite(rearLeftMotor.backwardPin,speed);
     analogWrite(rearRightMotor.backwardPin,speed);
-    while (distance <= 2) {
+    while (distance >= 2) {
         Mecanum::getDistance(rearSensorPins);
     }
     Mecanum::stop();
@@ -89,7 +95,7 @@ void Mecanum::driveLeft(float speed) {
     analogWrite(frontRightMotor.forwardPin,speed);
     analogWrite(rearLeftMotor.forwardPin,speed);
     analogWrite(rearRightMotor.backwardPin,speed);
-    while (distance <= 2) {
+    while (distance >= 2) {
         Mecanum::getDistance(leftSensorPins);
     }
     Mecanum::stop();
@@ -99,7 +105,7 @@ void Mecanum::driveRight(float speed) {
     analogWrite(frontRightMotor.backwardPin,speed);
     analogWrite(rearLeftMotor.backwardPin,speed);
     analogWrite(rearRightMotor.forwardPin,speed);
-    while (distance <= 2) {
+    while (distance >= 2) {
         Mecanum::getDistance(rightSensorPins);
     }
     Mecanum::stop();
@@ -111,7 +117,8 @@ void Mecanum::stop() {
     analogWrite(frontRightMotor.forwardPin,0);
     analogWrite(rearLeftMotor.forwardPin,0);
     analogWrite(rearRightMotor.forwardPin,0);
-    distance = 100;
+    //distance = 100;
+    Serial.println("Motors stopped");
 }
 
 // Function to get distance from ultrasonic sensor
