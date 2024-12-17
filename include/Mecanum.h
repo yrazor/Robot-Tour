@@ -40,7 +40,7 @@ public:
 
 private:
     // Private helper functions
-    void setMotorSpeed(const MotorPins& motor, float speed);
+    //void setMotorSpeed(const MotorPins& motor, float speed);
 
     // Motor pins
     MotorPins frontLeftMotor;
@@ -53,7 +53,7 @@ private:
     SensorPins rightSensorPins;
     SensorPins leftSensorPins;
 
-    float dist;
+    float distance;
 
     // Helper to constrain motor speed
     //float constrainSpeed(float speed);

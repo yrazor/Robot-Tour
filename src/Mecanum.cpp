@@ -69,7 +69,7 @@ void Mecanum::driveForward(float speed) {
     analogWrite(frontRightMotor.forwardPin,speed);
     analogWrite(rearLeftMotor.forwardPin,speed);
     analogWrite(rearRightMotor.forwardPin,speed);
-    while (dist <= 2) {
+    while (distance <= 2) {
         Mecanum::getDistance(frontSensorPins);
     }
     Mecanum::stop();
@@ -79,23 +79,39 @@ void Mecanum::driveBackward(float speed) {
     analogWrite(frontRightMotor.backwardPin,speed);
     analogWrite(rearLeftMotor.backwardPin,speed);
     analogWrite(rearRightMotor.backwardPin,speed);
-    while (dist <= 2) {
-        Mecanum::getDistance(frontSensorPins);
+    while (distance <= 2) {
+        Mecanum::getDistance(rearSensorPins);
     }
     Mecanum::stop();
 }
 void Mecanum::driveLeft(float speed) {
-
+    analogWrite(frontLeftMotor.backwardPin,speed);
+    analogWrite(frontRightMotor.forwardPin,speed);
+    analogWrite(rearLeftMotor.forwardPin,speed);
+    analogWrite(rearRightMotor.backwardPin,speed);
+    while (distance <= 2) {
+        Mecanum::getDistance(leftSensorPins);
+    }
+    Mecanum::stop();
 }
 void Mecanum::driveRight(float speed) {
-
+    analogWrite(frontLeftMotor.forwardPin,speed);
+    analogWrite(frontRightMotor.backwardPin,speed);
+    analogWrite(rearLeftMotor.backwardPin,speed);
+    analogWrite(rearRightMotor.forwardPin,speed);
+    while (distance <= 2) {
+        Mecanum::getDistance(rightSensorPins);
+    }
+    Mecanum::stop();
 }
 
+//Set all motor speed to 0 and distance far
 void Mecanum::stop() {
     analogWrite(frontLeftMotor.forwardPin,0);
     analogWrite(frontRightMotor.forwardPin,0);
     analogWrite(rearLeftMotor.forwardPin,0);
     analogWrite(rearRightMotor.forwardPin,0);
+    distance = 100;
 }
 
 // Function to get distance from ultrasonic sensor
@@ -111,7 +127,6 @@ float Mecanum::getDistance(SensorPins sensorLocation) {
   long duration = pulseIn(sensorLocation.echoPin, HIGH);
 
   // Convert the duration to distance (cm)
-  float distance = duration * 0.034 / 2;
-  dist = distance;
+  distance = duration * 0.034 / 2;
   return distance;
 }
