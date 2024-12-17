@@ -1,7 +1,21 @@
 #include <Mecanum.h>
 
-Mecanum::Mecanum(const SensorPins& sensorPins, const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight)
-    : sensorPins(sensorPins), frontLeftMotor(frontLeft), frontRightMotor(frontRight), rearLeftMotor(rearLeft), rearRightMotor(rearRight) {}
+Mecanum::Mecanum(const SensorPins& frontSensorPins, 
+const SensorPins& rearSensorPins, 
+const SensorPins& rightSensorPins, 
+const SensorPins& leftSensorPins, 
+const MotorPins& frontLeft, 
+const MotorPins& frontRight, 
+const MotorPins& rearLeft, 
+const MotorPins& rearRight)
+    : frontSensorPins(frontSensorPins), 
+    rearSensorPins(rearSensorPins), 
+    rightSensorPins(rightSensorPins), 
+    leftSensorPins(leftSensorPins), 
+    frontLeftMotor(frontLeft), 
+    frontRightMotor(frontRight), 
+    rearLeftMotor(rearLeft), 
+    rearRightMotor(rearRight) {}
 //Begin method
 void Mecanum::begin() {
     pinMode(frontLeftMotor.forwardPin,OUTPUT);
@@ -16,8 +30,8 @@ void Mecanum::begin() {
     pinMode(rearRightMotor.forwardPin,OUTPUT);
     pinMode(rearRightMotor.backwardPin,OUTPUT);
 
-    pinMode(sensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
-    pinMode(sensorPins.echoPin, INPUT); // Sets the echoPin as an Input
+    pinMode(frontSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(frontSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
 }
 // Drive method based on coordinates x and y
 /*void Mecanum::drive(float x, float y, float rotation) {
@@ -39,23 +53,56 @@ void Mecanum::begin() {
     setMotorSpeed(rearLeftMotor, rearLeftSpeed);
     setMotorSpeed(rearRightMotor, rearRightSpeed);
 }*/
+
+// Drive in each direction
 void Mecanum::driveForward(float speed) {
-    
+    analogWrite(frontLeftMotor.forwardPin,speed);
+    analogWrite(frontRightMotor.forwardPin,speed);
+    analogWrite(rearLeftMotor.forwardPin,speed);
+    analogWrite(rearRightMotor.forwardPin,speed);
+    while (dist <= 2) {
+        Mecanum::getDistance(frontSensorPins);
+    }
+    Mecanum::stop();
 }
+void Mecanum::driveBackward(float speed) {
+    analogWrite(frontLeftMotor.backwardPin,speed);
+    analogWrite(frontRightMotor.backwardPin,speed);
+    analogWrite(rearLeftMotor.backwardPin,speed);
+    analogWrite(rearRightMotor.backwardPin,speed);
+    while (dist <= 2) {
+        Mecanum::getDistance(frontSensorPins);
+    }
+    Mecanum::stop();
+}
+void Mecanum::driveLeft(float speed) {
+
+}
+void Mecanum::driveRight(float speed) {
+
+}
+
+void Mecanum::stop() {
+    analogWrite(frontLeftMotor.forwardPin,0);
+    analogWrite(frontRightMotor.forwardPin,0);
+    analogWrite(rearLeftMotor.forwardPin,0);
+    analogWrite(rearRightMotor.forwardPin,0);
+}
+
 // Function to get distance from ultrasonic sensor
-float getDistance() {
+float Mecanum::getDistance(SensorPins sensorLocation) {
   // Send a 10-microsecond pulse to the trigger pin
-  digitalWrite(trigPin, LOW);
+  digitalWrite(sensorLocation.trigPin, LOW);
   delayMicroseconds(2);
-  digitalWrite(trigPin, HIGH);
+  digitalWrite(sensorLocation.trigPin, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
+  digitalWrite(sensorLocation.trigPin, LOW);
 
   // Measure the duration of the echo pulse
-  long duration = pulseIn(echoPin, HIGH);
+  long duration = pulseIn(sensorLocation.echoPin, HIGH);
 
   // Convert the duration to distance (cm)
   float distance = duration * 0.034 / 2;
-
+  dist = distance;
   return distance;
 }

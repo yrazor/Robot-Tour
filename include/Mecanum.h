@@ -15,7 +15,14 @@ struct SensorPins {
 class Mecanum {
 public:
     // Constructor
-    Mecanum(const SensorPins& sensorPins, const MotorPins& frontLeft, const MotorPins& frontRight, const MotorPins& rearLeft, const MotorPins& rearRight);
+    Mecanum(const SensorPins& frontSensorPins, 
+    const SensorPins& rearSensorPins, 
+    const SensorPins& rightSensorPins, 
+    const SensorPins& leftSensorPins, 
+    const MotorPins& frontLeft, 
+    const MotorPins& frontRight, 
+    const MotorPins& rearLeft, 
+    const MotorPins& rearRight);
 
     // Initialization
     void begin();
@@ -40,11 +47,17 @@ private:
     MotorPins frontRightMotor;
     MotorPins rearLeftMotor;
     MotorPins rearRightMotor;
-    SensorPins sensorPins;
+    // Sensor pins
+    SensorPins frontSensorPins;
+    SensorPins rearSensorPins;
+    SensorPins rightSensorPins;
+    SensorPins leftSensorPins;
+
+    float dist;
 
     // Helper to constrain motor speed
     //float constrainSpeed(float speed);
-    float getDistance();
+    float getDistance(SensorPins sensorLocation);
 };
 
 #endif
