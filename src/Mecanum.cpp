@@ -32,6 +32,15 @@ void Mecanum::begin() {
 
     pinMode(frontSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(frontSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
+
+    pinMode(rearSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(rearSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
+
+    pinMode(rightSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(rightSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
+
+    pinMode(leftSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
+    pinMode(leftSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
 }
 // Drive method based on coordinates x and y
 /*void Mecanum::drive(float x, float y, float rotation) {
