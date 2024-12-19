@@ -39,7 +39,6 @@ public:
     void stop(); 
 
     float distance;
-    float dist;
 
     // Helper to constrain motor speed
     //float constrainSpeed(float speed);
@@ -48,17 +47,17 @@ public:
 private:
     // Private helper functions
     //void setMotorSpeed(const MotorPins& motor, float speed);
-
-    // Motor pins
-    MotorPins frontLeftMotor;
-    MotorPins frontRightMotor;
-    MotorPins rearLeftMotor;
-    MotorPins rearRightMotor;
     // Sensor pins
     SensorPins frontSensorPins;
     SensorPins rearSensorPins;
     SensorPins rightSensorPins;
     SensorPins leftSensorPins;
+    // Motor pins
+    MotorPins frontLeftMotor;
+    MotorPins frontRightMotor;
+    MotorPins rearLeftMotor;
+    MotorPins rearRightMotor;
+    
 };
 
 #endif

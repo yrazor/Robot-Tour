@@ -41,8 +41,6 @@ void Mecanum::begin() {
 
     pinMode(leftSensorPins.trigPin, OUTPUT); // Sets the trigPin as an Output
     pinMode(leftSensorPins.echoPin, INPUT); // Sets the echoPin as an Input
-
-    dist = 100;
 }
 // Drive method based on coordinates x and y
 /*void Mecanum::drive(float x, float y, float rotation) {
@@ -73,6 +71,7 @@ void Mecanum::driveForward(float speed) {
     analogWrite(frontRightMotor.forwardPin,speed);
     analogWrite(rearLeftMotor.forwardPin,speed);
     analogWrite(rearRightMotor.forwardPin,speed);
+    Serial.println("Driving forward");
     Serial.println("Motor speeds:");
     Serial.println(speed);
     while (true) {
@@ -81,6 +80,7 @@ void Mecanum::driveForward(float speed) {
             counter++;
             if (counter >= 5) {
                 Mecanum::stop();
+                break;
             }
         } 
     }
@@ -92,12 +92,14 @@ void Mecanum::driveBackward(float speed) {
     analogWrite(frontRightMotor.backwardPin,speed);
     analogWrite(rearLeftMotor.backwardPin,speed);
     analogWrite(rearRightMotor.backwardPin,speed);
+    Serial.println("Driving backward");
     while (true) {
         float dist = Mecanum::getDistance(rearSensorPins);
         if (dist <= 6) {
             counter++;
             if (counter >= 5) {
                 Mecanum::stop();
+                break;
             }
         } 
     }
@@ -109,12 +111,15 @@ void Mecanum::driveLeft(float speed) {
     analogWrite(frontRightMotor.forwardPin,speed);
     analogWrite(rearLeftMotor.forwardPin,speed);
     analogWrite(rearRightMotor.backwardPin,speed);
+    Serial.println("Driving left");
+
     while (true) {
         float dist = Mecanum::getDistance(leftSensorPins);
         if (dist <= 6) {
             counter++;
             if (counter >= 5) {
                 Mecanum::stop();
+                break;
             }
         } 
     }
@@ -126,12 +131,14 @@ void Mecanum::driveRight(float speed) {
     analogWrite(frontRightMotor.backwardPin,speed);
     analogWrite(rearLeftMotor.backwardPin,speed);
     analogWrite(rearRightMotor.forwardPin,speed);
+    Serial.println("Driving right");
     while (true) {
         float dist = Mecanum::getDistance(rightSensorPins);
         if (dist <= 6) {
             counter++;
             if (counter >= 5) {
                 Mecanum::stop();
+                break;
             }
         } 
     }
