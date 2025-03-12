@@ -30,16 +30,22 @@ void Drive::begin() {
 
     pinMode(leftMotor.forwardPin, OUTPUT);
     pinMode(leftMotor.backwardPin, OUTPUT);
+    pinMode(leftMotor.pwmPin, OUTPUT);
+
     pinMode(rightMotor.forwardPin, OUTPUT);
     pinMode(rightMotor.backwardPin, OUTPUT);
+    pinMode(rightMotor.pwmPin, OUTPUT);
 }
 
 // Stops both motors immediately by writing zero PWM to all control pins
 void Drive::stop() {
     analogWrite(leftMotor.forwardPin, 0);
     analogWrite(leftMotor.backwardPin, 0);
+    analogWrite(leftMotor.pwmPin, 0);
+
     analogWrite(rightMotor.forwardPin, 0);
     analogWrite(rightMotor.backwardPin, 0);
+    analogWrite(rightMotor.pwmPin, 0);
 }
 
 // Drives the robot forward at a given speed until an obstacle is within 6 cm distance
@@ -47,9 +53,11 @@ void Drive::driveForward(float speed) {
     int counter = 0;
     analogWrite(leftMotor.forwardPin, speed);
     analogWrite(rightMotor.forwardPin, speed);
+    Serial.print("Driving forward");
     // Continuously check front sensor distance
     while(true) {
         float dist = Drive::getDistance(frontSensorPins);
+        Serial.print(dist);
         if (dist <= 6) {
             counter++;
             if (counter >= 5) {
