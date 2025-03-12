@@ -5,8 +5,8 @@ const int backwardBackLeftPin = 5;
 const int forwardBackRightPin = 2; 
 const int backwardBackRightPin = 3; 
 
-const int trigPin = 52;
-const int echoPin = 53;
+const int trigPin = 53;
+const int echoPin = 52;
 
 float distance;
 const int minDistance = 5;  // Minimum distance in cm (motor will stop)

@@ -1,0 +1,52 @@
+#include <Arduino.h>
+
+const int fronttrigPin = 53;
+const int frontechoPin = 52;
+const int righttrigPin = 51;
+const int rightechoPin = 50;
+const int lefttrigPin = 49;
+const int leftechoPin = 48;
+const int reartrigPin = 47;
+const int rearechoPin = 46;
+
+float distance;
+const int delayTime = 2000;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(fronttrigPin, OUTPUT); // Sets the trigPin as an Output
+  pinMode(frontechoPin, INPUT); // Sets the echoPin as an Input
+  pinMode(righttrigPin, OUTPUT); 
+  pinMode(rightechoPin, INPUT);
+  pinMode(lefttrigPin, OUTPUT); 
+  pinMode(leftechoPin, INPUT);
+  pinMode(reartrigPin, OUTPUT); 
+  pinMode(rearechoPin, INPUT);
+
+  Serial.begin(9600); // Starts the serial communication
+}
+
+// Function to get distance from ultrasonic sensor
+float getDistance(int trig, int echo) {
+  // Send a 10-microsecond pulse to the trigger pin
+  digitalWrite(trig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+
+  // Measure the duration of the echo pulse
+  long duration = pulseIn(echo, HIGH);
+
+  // Convert the duration to distance (cm)
+  float distance = duration * 0.034 / 2;
+
+  return distance;
+}
+
+void loop() {
+    distance = getDistance(righttrigPin, rightechoPin);
+    Serial.print("Distance: ");
+    Serial.print(distance);
+    delay(100); // Short delay for stability
+}
