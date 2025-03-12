@@ -1,7 +1,3 @@
-Science Olympiad Robot Tour
+Science Olympiad Build Code
 
-Todo:
-- Stop the robot when its close to a wall using sensors.
-- Test movement and sensor accuracy
-- make a mock arena to drive on and try preprogramming.
-
+ev.ino for electric vehicle, rest of the tree for robot tour
