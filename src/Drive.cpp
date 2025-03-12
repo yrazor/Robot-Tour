@@ -41,18 +41,34 @@ void Drive::stop() {
 }
 
 void Drive::driveForward(float speed) {
+    int counter = 0;
     analogWrite(leftMotor.forwardPin, speed);
     analogWrite(rightMotor.forwardPin, speed);
+    while(true) {
+        float dist = Drive::getDistance(frontSensorPins);
+        if (dist <= 6) {
+            counter++;
+            if (counter >= 5) {
+                Drive::stop();
+                break;
+            }
+        } 
+    }
 }
 
 void Drive::turnRight(float speed) {
     analogWrite(leftMotor.forwardPin, speed);
     analogWrite(rightMotor.forwardPin, 0);
+    delay(5000);
+    analogWrite(leftMotor.forwardPin, 0);
 }
 
 void Drive::turnLeft(float speed) {
     analogWrite(rightMotor.forwardPin, speed);
     analogWrite(leftMotor.forwardPin, 0);
+    delay(5000);
+    analogWrite(rightMotor.forwardPin, 0);
+
 }
 
 float Drive::getDistance(SensorPins sensorLocation) {
